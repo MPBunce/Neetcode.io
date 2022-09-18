@@ -48,26 +48,53 @@ public:
 
 class Solution {
 public:
+    
     bool isAnagram(string s, string t) {
+        if (s.length() != t.length()) return false;
         
+        int n = s.length();
+        unordered_map<char, int> counts;
+        for (int i = 0; i < n; i++) {
+            counts[s[i]]++;
+            counts[t[i]]--;
+        }
+        for (auto count : counts){
+            if (count.second){
+                return false;   
+            }         
+        }
 
-        unordered_map<char,int> mp;
+        return true;
         
-        for(int i=0;i<s.size();i++){
-            mp[s[i]]++;
-        }
-            
-        for(int i=0;i<t.size();i++){
-            mp[t[i]]--;
-        }
+    }
+};
+
+// Sorting
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {       
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
         
-        for(auto it:mp){
-            if(it.second!=0){
-                return false;
-                }
+        if(s.size() != t.size()){return false;}
+        
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] != t[i]){return false;}
         }
         
         return true;
+    }
+};
+
+//sorting with less code
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        sort(s.begin(),s.end());
+        sort(t.begin(),t.end());
         
+        return s==t;
     }
 };
